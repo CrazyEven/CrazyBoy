@@ -1,4 +1,3 @@
-package test;
 
 import main.crazyJava.carzyPojo.common.TechnologyEntity;
 import main.crazyJava.crazyJdbc.spring.dao.SpringJdbcDao;
