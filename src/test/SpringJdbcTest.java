@@ -22,4 +22,5 @@ public class SpringJdbcTest {
         System.out.println(technologyEntity.getCreateTime());
         System.out.println(technologyEntity.getUpdateTime());
     }
+
 }
