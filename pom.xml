@@ -137,7 +137,7 @@
     <build>
         <finalName>CrazyBoy</finalName>
         <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>src/test/</testSourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
         <resources>
             <resource>
                 <directory>properties</directory>
