@@ -15,6 +15,18 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
+    <!-- 导入config属性配置
+    在.xml中引入外部文件，即.properties文件
+    引入外部文件后，就可以在xml中用${key}替换指定的properties文件中的值，
+    通常项目中都会将jdbc的配置放在properties文件中-->
+    <bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- ioc -->
     <context:component-scan base-package="main.crazyJava" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
@@ -26,14 +38,66 @@
     <!-- 数据源 -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/crazy?characterEncoding=utf8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="zyf931125."/>
+        <property name="driverClassName" value="${jdbc.driverClass}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
     <!-- 配置Jdbc模板  以便Spring可自动注入JdbcTemplate对象。-->
     <bean id="jdbcTemPlate" class="org.springframework.jdbc.core.JdbcTemplate"
           p:dataSource-ref="dataSource"/>
 
 
+    <!--  redis 2.0 以上版本配置 -->
+
+    <!-- 配置 JedisPoolConfig 实例 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.testOnReturn}"/>
+    </bean>
+
+    <!--redis链接密码-->
+    <bean id="redisPassword" class="org.springframework.data.redis.connection.RedisPassword">
+        <constructor-arg name="thePassword" value="${redis.password}"></constructor-arg>
+    </bean>
+
+    <!-- 配置JedisConnectionFactory -->
+    <bean id="redisStandaloneConfiguration"
+          class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+        <property name="hostName" value="${redis.url}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" ref="redisPassword"/>
+        <property name="database" value="${redis.database}"/>
+    </bean>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg name="standaloneConfig" ref="redisStandaloneConfiguration"></constructor-arg>
+    </bean>
+    <!--手动设置 key  与 value的序列化方式-->
+    <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="valueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+
+
+    <!--配置RedisTemplate  -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="keySerializer" ref="keySerializer"/>
+        <property name="valueSerializer" ref="valueSerializer"/>
+        <property name="hashKeySerializer" ref="keySerializer"/>
+        <property name="hashValueSerializer" ref="valueSerializer"/>
+    </bean>
+
+    <!--也可以StringRedisTemplate  专注于String的操作  -->
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <!--<property name="connectionFactory" ref="jedisConnectionFactory"></property>-->
+        <!--在StringRedisTemplate与redisTemplate不同,可以直接造构造器中传入ConnectionFactory-->
+        <constructor-arg name="connectionFactory" ref="jedisConnectionFactory"></constructor-arg>
+        <property name="keySerializer" ref="keySerializer"/>
+        <property name="valueSerializer" ref="valueSerializer"/>
+        <property name="hashKeySerializer" ref="keySerializer"/>
+        <property name="hashValueSerializer" ref="valueSerializer"/>
+    </bean>
 </beans>

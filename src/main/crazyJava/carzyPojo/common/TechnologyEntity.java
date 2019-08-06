@@ -1,7 +1,13 @@
 package main.crazyJava.carzyPojo.common;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+
+//@Entity
+//@Table(name = "CRAZY_TECHNOLOGY")
 public class TechnologyEntity {
     private String id;
     private String name;
@@ -9,6 +15,7 @@ public class TechnologyEntity {
     private Date createTime;
     private Date updateTime;
 
+    //@Id
     public String getId() {
         return id;
     }
