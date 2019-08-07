@@ -5,10 +5,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
-public class redisTemplateOp {
+public class RedisTemplateOp {
 
     /**
      * StringRedisTemplate默认采用的是String的序列化策略，保存的key和value都是采用此策略序列化保存的。
@@ -40,7 +42,7 @@ public class redisTemplateOp {
     }
 
     public void set(String k, String v, long timeOut) {
-        stringRedisTemplate.opsForValue().set(k, v, timeOut);
+        stringRedisTemplate.opsForValue().set(k, v, timeOut, TimeUnit.SECONDS);
     }
 
     public Object getObject(Object k) {
@@ -108,5 +110,33 @@ public class redisTemplateOp {
         return stringRedisTemplate.opsForList().rightPop(k);
     }
 
+    /**
+     * 根据k 删除
+     *
+     * @param k
+     */
+    public void deleteKey(String... k) {
+        stringRedisTemplate.delete(Arrays.asList(k));
+    }
+
+    /**
+     * 检查key是否存在
+     *
+     * @param k
+     * @return
+     */
+    public Boolean hasKey(String k) {
+        return stringRedisTemplate.hasKey(k);
+    }
+
+    /**
+     * 根据k获取有效时间
+     *
+     * @param k
+     * @return
+     */
+    public Long getExpire(String k) {
+        return stringRedisTemplate.getExpire(k, TimeUnit.SECONDS);
+    }
 
 }
