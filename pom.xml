@@ -102,7 +102,6 @@
             <version>${org.springframework.version}</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -122,8 +121,6 @@
         </dependency>
 
 
-
-
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
@@ -134,10 +131,16 @@
 
 
         <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate.orm</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>6.0.0.Alpha2</version>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.0.0.Alpha2</version>
+            <version>5.4.4.Final</version>
         </dependency>
 
 

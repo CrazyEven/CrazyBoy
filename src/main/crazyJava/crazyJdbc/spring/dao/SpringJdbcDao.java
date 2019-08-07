@@ -1,6 +1,6 @@
 package main.crazyJava.crazyJdbc.spring.dao;
 
-import main.crazyJava.carzyPojo.common.TechnologyEntity;
+import main.crazyJava.crazyPojo.common.TechnologyEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
