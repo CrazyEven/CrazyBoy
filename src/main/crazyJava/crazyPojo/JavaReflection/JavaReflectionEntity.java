@@ -13,7 +13,7 @@ import java.util.Set;
  * java反射机制
  */
 @Entity(name = "JAVA_REFLECTION")
-//@Table(name = "JAVA_REFLECTION")
+@Table(name = "JAVA_REFLECTION")
 public class JavaReflectionEntity implements Serializable{
 
     private String id;
@@ -75,7 +75,7 @@ public class JavaReflectionEntity implements Serializable{
     }
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="reflection_id")
+    @JoinColumn(name="REFLECTION_ID")
     public Set<JavaMethodEntity> getSet() {
         return set;
     }

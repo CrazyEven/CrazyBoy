@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "JAVA_METHOD")
-//@Table(name = "JAVA_METHOD")
+@Table(name = "JAVA_METHOD")
 public class JavaMethodEntity implements Serializable{
 
     private String id;

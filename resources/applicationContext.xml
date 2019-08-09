@@ -13,6 +13,9 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
+    <!-- spring加载xml文件 解析之后 是通过反射机制进行辅助的 类对于反射机制是透明的 所有私有受保护的属性也都是可见的
+     所有可以也通过私有构造器注入-->
+
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- 导入config属性配置
