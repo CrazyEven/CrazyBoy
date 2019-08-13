@@ -19,7 +19,7 @@ public class HibernateHqlTemplate {
      */
     public <T> T getEntity(Class<T> tClass,Serializable id){
 
-        return null
+        return null;
     }
 
 }
