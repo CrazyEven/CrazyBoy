@@ -24,11 +24,12 @@ public class NettyClient {
                     }
                 });
 
-        Channel channel = bootstrap.connect("127.0.0.1", 8000).channel();
+        Channel channel = bootstrap.connect("localhost", 8000).channel();
 
         while (true) {
-            channel.writeAndFlush(new Date() + ": hello world!");
-            Thread.sleep(2000);
+            System.out.println("client on the inter ...");
+            channel.writeAndFlush(new Date() + ": hello world!\n");
+            Thread.sleep(5000);
         }
     }
 }

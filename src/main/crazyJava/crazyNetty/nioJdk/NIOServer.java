@@ -17,6 +17,7 @@ import java.util.Set;
 public class NIOServer {
 
     public static void main(String[] args) throws IOException {
+        //创建Selector
         Selector serverSelector = Selector.open();
         Selector clientSelector = Selector.open();
 
@@ -26,11 +27,17 @@ public class NIOServer {
                 ServerSocketChannel listenerChannel = ServerSocketChannel.open();
                 listenerChannel.socket().bind(new InetSocketAddress(8000));
                 listenerChannel.configureBlocking(false);
+                //向Selector注册通道
+                //为了将Channel和Selector配合使用，必须将channel注册到selector上。通过SelectableChannel.register()方法来实现
+                //与Selector一起使用时，Channel必须处于非阻塞模式下。这意味着不能将FileChannel与Selector一起使用，
+                // 因为FileChannel不能切换到非阻塞模式。而套接字通道都可以。
                 listenerChannel.register(serverSelector, SelectionKey.OP_ACCEPT);
+                System.out.println("==============");
 
                 while (true) {
-                    // 监测是否有新的连接，这里的1指的是阻塞的时间为1ms
+                    // 监测是否有新的连接，这里的1指的是阻塞的时间为1ms 采用轮询的方式，查询获取“准备就绪”的注册过的操作
                     if (serverSelector.select(1) > 0) {
+                        System.out.println("=====you=========");
                         Set<SelectionKey> set = serverSelector.selectedKeys();
                         Iterator<SelectionKey> keyIterator = set.iterator();
 
