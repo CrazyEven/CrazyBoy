@@ -32,7 +32,7 @@ public class Server {
         try {
             ServerBootstrap b = new ServerBootstrap();
 //            b.group(pGroup, cGroup) // 绑定俩个线程组
-//                    .channel(NioServerSocketChannel.class) // 指定NIO的模式.NioServerSocketChannel对应TCP, NioDatagramChannel对应UDP
+//                    .channel(NioServerSocketChannel.class) // 指定NIO的模式.NioServerSocketChannel对应TCP, NioDatagramChannel对应UDP  指定通道channel的类型，由于是服务端，故而是NioServerSocketChannel；
 //                    .option(ChannelOption.SO_BACKLOG, 1024) // 设置TCP缓冲区
 //                    .option(ChannelOption.SO_SNDBUF, 32 * 1024) // 设置发送缓冲大小
 //                    .option(ChannelOption.SO_RCVBUF, 32 * 1024) // 这是接收缓冲大小
